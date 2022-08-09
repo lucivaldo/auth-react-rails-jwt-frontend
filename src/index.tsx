@@ -17,9 +17,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <AuthProvider>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-  </AuthProvider>
+  <React.StrictMode>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </AuthProvider>
+  </React.StrictMode>
 );
