@@ -35,9 +35,9 @@ export default function AuthEgide() {
     if (code == null) {
       sessionStorage.setItem("@myapp.pathname", `${state?.from?.pathname}`);
   
-      window.location.href = "http://localhost:3010/auth/new";
+      window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/new`;
     } else if (auth.user == null) {
-      axios.post<AuthTokenResponse>('http://localhost:3010/auth/token', { code }, {
+      axios.post<AuthTokenResponse>(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/token`, { code }, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
