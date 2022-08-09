@@ -1,26 +1,13 @@
 import { useEffect } from 'react';
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useAuth } from '../../context/AuthProvider';
-import { setAuthorizationToken } from '../../services/api';
+import { getToken, setAuthorizationToken } from '../../services/api';
 
 type LocationType = {
   state?: {
     from?: Location;
   }
 };
-
-type AuthTokenResponse = {
-  token: string;
-  usuario: {
-    id: number;
-    username: string;
-    email: string;
-    matricula: string;
-    cpf: string;
-    active: boolean;
-  }
-}
 
 export default function AuthEgide() {
   const { state } = useLocation() as LocationType;
@@ -37,22 +24,17 @@ export default function AuthEgide() {
         sessionStorage.setItem("@myapp.pathname", `${state?.from?.pathname}`);
         window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/new`;
       } else if (user == null) {
-        axios.post<AuthTokenResponse>(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/token`, { code }, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          }
-        })
-        .then(({ data }) => {
-          signin({
-            token: data.token,
-            user: data.usuario
+        getToken(code)
+          .then(({ token, usuario }) => {
+            signin({
+              token,
+              user: usuario
+            });
+
+            setAuthorizationToken(token);
+
+            navigate(sessionStorage.getItem('@myapp.pathname') || '/');
           });
-  
-          setAuthorizationToken(data.token);
-  
-          navigate(sessionStorage.getItem('@myapp.pathname') || '/');
-        })
       }
     } else if (status === "unauthenticated") {
       sessionStorage.removeItem("@myapp.pathname");
