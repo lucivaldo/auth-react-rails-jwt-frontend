@@ -17,3 +17,5 @@ Crie um arquivo __.env__ na raiz do projeto configurando as variáveis definidas
 `yarn start`
 
 A aplicação será iniciada na porta padrão 3000.
+
+Esta implementação segue o fluxo desenhado [neste arquivo](https://github.com/lucivaldo/auth-react-rails-jwt-frontend/blob/main/docs/Autentica%C3%A7%C3%A3o%20JWT%20-%20Fluxo%20frontend%20React%20com%20backend%20em%20Rails.png)
