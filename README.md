@@ -15,3 +15,5 @@ Crie um arquivo __.env__ na raiz do projeto configurando as variáveis definidas
 ## Iniciar a aplicação
 
 `yarn start`
+
+A aplicação será iniciada na porta padrão 3000.
