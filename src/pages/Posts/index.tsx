@@ -5,13 +5,13 @@ import AppLayout from "../../layout/AppLayout";
 import { getPosts } from '../../services/api';
 
 export default function Posts() {
-  const { auth } = useAuth();
+  const { user } = useAuth();
 
-  const { data: posts = [] } = useQuery(['posts', auth.user?.id], getPosts);
+  const { data: posts = [] } = useQuery(['posts', user?.id], getPosts);
 
   return (
     <AppLayout>
-      <h2>Posts from {auth.user?.username}</h2>
+      <h2>Posts from {user?.username}</h2>
 
       <ul>
         {posts.map(post => (

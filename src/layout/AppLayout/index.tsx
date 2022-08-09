@@ -6,7 +6,7 @@ type AppLayoutProps = {
 };
 
 export default function AppLayout({ children }: AppLayoutProps) {
-  const { auth } = useAuth();
+  const { user } = useAuth();
 
   return (
     <div className='container'>
@@ -16,7 +16,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
         <Link to="/posts">Posts</Link>
       </nav>
 
-      <div>Logged as {auth.user?.username}</div>
+      <div>Logged as {user?.username}</div>
 
       <div className=''>{children}</div>
     </div>

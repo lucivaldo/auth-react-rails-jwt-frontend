@@ -30,10 +30,10 @@ export default function App() {
 }
 
 function RequireAuth({ children }: { children: JSX.Element }) {
-  const { auth } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
 
-  if (auth.user == null) {
+  if (user == null) {
     return <Navigate to="/auth/egide" state={{ from: location }} replace />;
   }
 

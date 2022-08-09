@@ -27,7 +27,7 @@ export default function AuthEgide() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { auth, configureAuth } = useAuth();
+  const { user, signin } = useAuth();
 
   const code = searchParams.get('code');
 
@@ -36,7 +36,7 @@ export default function AuthEgide() {
       sessionStorage.setItem("@myapp.pathname", `${state?.from?.pathname}`);
   
       window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/new`;
-    } else if (auth.user == null) {
+    } else if (user == null) {
       axios.post<AuthTokenResponse>(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/token`, { code }, {
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default function AuthEgide() {
         }
       })
       .then(({ data }) => {
-        configureAuth({
+        signin({
           token: data.token,
           user: data.usuario
         });
@@ -54,7 +54,7 @@ export default function AuthEgide() {
         navigate(sessionStorage.getItem('@myapp.pathname') || '/');
       })
     }
-  }, [auth.user, code, configureAuth, navigate, state?.from?.pathname]);
+  }, [code, navigate, signin, state?.from?.pathname, user]);
 
 
   return null;

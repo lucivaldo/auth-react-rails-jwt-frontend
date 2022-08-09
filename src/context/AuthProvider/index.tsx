@@ -1,14 +1,14 @@
 import { createContext, useContext, useState } from "react";
 
-type AuthContextType = {
-  auth: Auth;
-  configureAuth: (authArgs: Auth) => void;
-};
-
-type Auth = {
+type AuthType = {
   token: string;
   user: User | null;
-}
+};
+
+type AuthContextType = AuthType & {
+  signin: (args: { token: string; user: User }) => void;
+  signout: () => void;
+};
 
 type User = {
   id: number;
@@ -17,14 +17,11 @@ type User = {
   active: boolean;
 };
 
-const DEFAULT_AUTH: Auth = {
+const INITIAL_STATE: AuthContextType = {
   token: '',
   user: null,
-}
-
-const INITIAL_STATE: AuthContextType = {
-  auth: DEFAULT_AUTH,
-  configureAuth: () => null,
+  signin: () => null,
+  signout: () => null,
 };
 
 const AuthContext = createContext<AuthContextType>(INITIAL_STATE);
@@ -40,15 +37,26 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 function useAuthProvider(): AuthContextType {
-  const [auth, setAuth] = useState<Auth>(DEFAULT_AUTH);
+  const [auth, setAuth] = useState<AuthType>(INITIAL_STATE);
 
-  const configureAuth = (authArgs: Auth) => {
-    setAuth(authArgs);
-  }
+  const signin = ({ user, token }: AuthType) => {
+    setAuth({
+      user,
+      token,
+    });
+  };
+
+  const signout = () => {
+    setAuth({
+      user: null,
+      token: '',
+    })
+  };
 
   return {
-    auth,
-    configureAuth,
+    ...auth,
+    signin,
+    signout,
   };
 }
 
