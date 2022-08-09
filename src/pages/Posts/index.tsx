@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useAuth } from "../../context/AuthProvider";
-import AppLayout from "../../layout/AppLayout";
+import { useAuth } from '../../context/AuthProvider';
+import AppLayout from '../../layout/AppLayout';
 import { getPosts } from '../../services/api';
 
 export default function Posts() {

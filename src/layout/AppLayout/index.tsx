@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { useAuth } from '../../context/AuthProvider';
 
 type AppLayoutProps = {
@@ -13,20 +14,28 @@ export default function AppLayout({ children }: AppLayoutProps) {
   };
 
   return (
-    <div className='container'>
-      <nav className='d-flex gap-3 py-3'>
+    <div className="container">
+      <nav className="d-flex gap-3 py-3">
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
         <Link to="/posts">Posts</Link>
       </nav>
 
-      <div className='d-flex gap-2 align-items-center mb-3'>
-        <p className='mb-0'>Logged as <strong>{user?.username}</strong></p>
+      <div className="d-flex gap-2 align-items-center mb-3">
+        <p className="mb-0">
+          Logged as <strong>{user?.username}</strong>
+        </p>
 
-        <button type='button' className='btn btn-danger' onClick={handleSignout}>Signout</button>
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={handleSignout}
+        >
+          Signout
+        </button>
       </div>
 
-      <div className=''>{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }

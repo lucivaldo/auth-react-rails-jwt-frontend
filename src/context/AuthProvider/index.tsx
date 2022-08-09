@@ -1,11 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from 'react';
 
 type AuthType = {
   token: string;
   user: User | null;
 };
 
-type AuthStates = 'idle' | 'authenticated' | 'unauthenticated'
+type AuthStates = 'idle' | 'authenticated' | 'unauthenticated';
 
 type AuthContextType = AuthType & {
   status: AuthStates;
@@ -34,15 +34,9 @@ type AuthProviderProps = {
   children: React.ReactNode;
 };
 
-export function AuthProvider({ children }: AuthProviderProps) {
-  const auth = useAuthProvider();
-
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
-}
-
 function useAuthProvider(): AuthContextType {
   const [auth, setAuth] = useState<AuthType>(INITIAL_STATE);
-  const [status, setStatus] = useState<AuthStates>("idle");
+  const [status, setStatus] = useState<AuthStates>('idle');
 
   const signin = ({ user, token }: AuthType) => {
     setAuth({
@@ -68,6 +62,12 @@ function useAuthProvider(): AuthContextType {
     signin,
     signout,
   };
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
+  const auth = useAuthProvider();
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
