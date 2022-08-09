@@ -5,7 +5,10 @@ type AuthType = {
   user: User | null;
 };
 
+type AuthStates = 'idle' | 'authenticated' | 'unauthenticated'
+
 type AuthContextType = AuthType & {
+  status: AuthStates;
   signin: (args: { token: string; user: User }) => void;
   signout: () => void;
 };
@@ -20,6 +23,7 @@ type User = {
 const INITIAL_STATE: AuthContextType = {
   token: '',
   user: null,
+  status: 'idle',
   signin: () => null,
   signout: () => null,
 };
@@ -38,23 +42,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 function useAuthProvider(): AuthContextType {
   const [auth, setAuth] = useState<AuthType>(INITIAL_STATE);
+  const [status, setStatus] = useState<AuthStates>("idle");
 
   const signin = ({ user, token }: AuthType) => {
     setAuth({
       user,
       token,
     });
+
+    setStatus('authenticated');
   };
 
   const signout = () => {
+    setStatus('unauthenticated');
+
     setAuth({
       user: null,
       token: '',
-    })
+    });
   };
 
   return {
     ...auth,
+    status,
     signin,
     signout,
   };

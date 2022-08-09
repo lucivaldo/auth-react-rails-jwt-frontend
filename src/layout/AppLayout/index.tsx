@@ -6,7 +6,11 @@ type AppLayoutProps = {
 };
 
 export default function AppLayout({ children }: AppLayoutProps) {
-  const { user } = useAuth();
+  const { user, signout } = useAuth();
+
+  const handleSignout = () => {
+    signout();
+  };
 
   return (
     <div className='container'>
@@ -16,7 +20,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
         <Link to="/posts">Posts</Link>
       </nav>
 
-      <div>Logged as {user?.username}</div>
+      <div className='d-flex gap-2 align-items-center mb-3'>
+        <p className='mb-0'>Logged as <strong>{user?.username}</strong></p>
+
+        <button type='button' className='btn btn-danger' onClick={handleSignout}>Signout</button>
+      </div>
 
       <div className=''>{children}</div>
     </div>

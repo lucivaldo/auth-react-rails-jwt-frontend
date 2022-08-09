@@ -27,34 +27,38 @@ export default function AuthEgide() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { user, signin } = useAuth();
+  const { user, signin, status } = useAuth();
 
   const code = searchParams.get('code');
 
   useEffect(() => {
-    if (code == null) {
-      sessionStorage.setItem("@myapp.pathname", `${state?.from?.pathname}`);
+    if (status === "idle") {
+      if (code == null) {
+        sessionStorage.setItem("@myapp.pathname", `${state?.from?.pathname}`);
+        window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/new`;
+      } else if (user == null) {
+        axios.post<AuthTokenResponse>(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/token`, { code }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }
+        })
+        .then(({ data }) => {
+          signin({
+            token: data.token,
+            user: data.usuario
+          });
   
-      window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/new`;
-    } else if (user == null) {
-      axios.post<AuthTokenResponse>(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/token`, { code }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }
-      })
-      .then(({ data }) => {
-        signin({
-          token: data.token,
-          user: data.usuario
-        });
-
-        setAuthorizationToken(data.token);
-
-        navigate(sessionStorage.getItem('@myapp.pathname') || '/');
-      })
+          setAuthorizationToken(data.token);
+  
+          navigate(sessionStorage.getItem('@myapp.pathname') || '/');
+        })
+      }
+    } else if (status === "unauthenticated") {
+      sessionStorage.removeItem("@myapp.pathname");
+      window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/destroy`;
     }
-  }, [code, navigate, signin, state?.from?.pathname, user]);
+  }, [code, navigate, signin, state?.from?.pathname, status, user]);
 
 
   return null;
