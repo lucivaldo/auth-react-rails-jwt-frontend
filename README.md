@@ -1,4 +1,4 @@
-# Autenticação de aplicação React com backend em Rails utilizando JWT
+# Autenticação de aplicação React com backend em Rails utilizando JWT - Frontend
 
 ## Configuração
 
