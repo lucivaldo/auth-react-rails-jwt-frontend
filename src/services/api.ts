@@ -42,10 +42,15 @@ export async function getToken(code: string) {
 type Post = {
   id: number;
   title: string;
-  description: string;
+  content: string;
 };
 
 export async function getPosts() {
   const { data } = await instance.get<Post[]>('posts');
+  return data;
+}
+
+export async function getPost(id: number | string) {
+  const { data } = await instance.get<Post>(`posts/${id}`);
   return data;
 }

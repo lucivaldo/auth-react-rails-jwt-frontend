@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../context/AuthProvider';
 import AppLayout from '../../layout/AppLayout';
@@ -16,8 +17,10 @@ export default function Posts() {
       <ul>
         {posts.map(post => (
           <li key={post.id}>
-            <div>{post.title}</div>
-            <div>{post.description}</div>
+            <Link to={`/posts/${post.id}`}>
+              <div>{post.title}</div>
+              <div>{post.content}</div>
+            </Link>
           </li>
         ))}
       </ul>

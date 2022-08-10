@@ -12,6 +12,7 @@ import { useAuth } from './context/AuthProvider';
 import About from './pages/About';
 import Home from './pages/Home';
 import Posts from './pages/Posts';
+import PostsShow from './pages/Posts/Show';
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
@@ -44,6 +45,15 @@ export default function App() {
           element={
             <RequireAuth>
               <Posts />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="/posts/:id"
+          element={
+            <RequireAuth>
+              <PostsShow />
             </RequireAuth>
           }
         />
