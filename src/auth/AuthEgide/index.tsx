@@ -20,7 +20,7 @@ export default function AuthEgide() {
   const code = searchParams.get('code');
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (status === 'idle' || status === 'expired') {
       if (code == null) {
         sessionStorage.setItem('@myapp.pathname', `${state?.from?.pathname}`);
         window.location.href = `${process.env.REACT_APP_BACKEND_BASE_URL}/auth/new`;

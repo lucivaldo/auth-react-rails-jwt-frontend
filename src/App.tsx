@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import AuthEgide from './auth/AuthEgide';
+import AuthExpired from './auth/Expired';
 import { useAuth } from './context/AuthProvider';
 
 import About from './pages/About';
@@ -30,6 +31,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/auth/egide" element={<AuthEgide />} />
+        <Route path="/auth/expired" element={<AuthExpired />} />
 
         <Route
           path="/about"
