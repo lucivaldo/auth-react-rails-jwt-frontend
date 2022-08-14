@@ -1,5 +1,7 @@
 # Autenticação de aplicação React com backend em Rails utilizando JWT - Frontend
 
+Este exemplo utiliza a Context API do React
+
 ## Configuração
 
 ### Configurar o backend
